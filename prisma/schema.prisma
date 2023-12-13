@@ -20,8 +20,8 @@ model User {
 model Partner {
   id              String     @id @default(uuid())
   name            String
-  ogrn            Int
-  inn             Int
+  ogrn            Int?
+  inn             Int?
   createdContract Contract[]
 }
 

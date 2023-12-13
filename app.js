@@ -12,5 +12,7 @@ app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
 
 app.use('/api/v1/user', require('./routes/users'))
+app.use('/api/v1/partner', require('./routes/partners'))
+app.use('/api/v1/contract', require('./routes/contracts'))
 
 module.exports = app
