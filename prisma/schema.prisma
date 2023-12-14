@@ -26,7 +26,8 @@ model Partner {
 }
 
 model Contract {
-  id        String  @id @default(uuid())
-  partner   Partner @relation(fields: [partnerId], references: [id])
-  partnerId String
+  id             String  @id @default(uuid())
+  contractNumber String
+  partner        Partner @relation(fields: [partnerId], references: [id])
+  partnerId      String
 }
