@@ -18,8 +18,8 @@ const getAllContracts = async (req, res) => {
 
 module.exports = {
     getAllContracts,
-    getContract,
-    addContract,
-    editContract,
-    deleteContract
+    //getContract,
+    //addContract,
+    //editContract,
+    //deleteContract
 }
