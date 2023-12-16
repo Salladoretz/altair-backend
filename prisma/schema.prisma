@@ -20,14 +20,38 @@ model User {
 model Partner {
   id              String     @id @default(uuid())
   name            String
-  ogrn            String     @unique
+  shortName       String?    @unique
+  ogrn            String?    @unique
+  ogrnDate        DateTime?
   inn             String     @unique
+  address1        String?
+  address2        String?
+  email           String?
+  phone           String?
+  bank            String?
+  boss            String?
+  bossGenitive    String?
+  //createdAt       DateTime   @default(now())
   createdContract Contract[]
 }
 
 model Contract {
-  id             String  @id @default(uuid())
-  contractNumber String
-  partner        Partner @relation(fields: [partnerId], references: [id])
-  partnerId      String
+  id              String  @id @default(uuid())
+  contractNumber  String?
+  contractDate    DateTime?
+  partner         Partner @relation(fields: [partnerId], references: [id])
+  partnerId       String
+  original        Boolean?
+  cloudCopy       String?
+  createdAddendum Addendum[]
+}
+
+model Addendum {
+  id              String  @id @default(uuid())
+  addendumNumber  String?
+  addendumDate    DateTime?
+  original        Boolean?
+  cloudCopy       String?
+  contract        Contract @relation(fields: [contractId], references: [id])
+  contractId      String
 }

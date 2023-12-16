@@ -1,40 +1,46 @@
 const { prisma } = require('../prisma/prisma-client')
-const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken')
 
-
+/* Получение всех контрагентов
+route - GET {BASE_URL}/api/v1/partner
+*/
 const getAllPartners = async (req, res) => {
 
     try {
-
         const partners = await prisma.partner.findMany()
 
         res.status(200).json(partners)
 
     } catch {
-        res.status(500).json({ message: 'Не удалось загрузить контрагентов' })
+        res.status(500).json({ message: 'Не удалось загрузить контрагентов!' })
     }
 }
 
+/* Получение контрагента по ID
+route - GET {BASE_URL}/api/v1/partner/:id
+С помощью params
+*/
 const getPartnerById = async (req, res) => {
 
     try {
-        const partnerID = req.body.id
+        const { id } = req.params
 
-        const partner = await prisma.partner.findFirst({
+        const partner = await prisma.partner.findUnique({
             where: {
-                id: id
+                id
             }
         })
 
         res.status(200).json(partner)
 
     } catch {
-        res.status(500).json({ message: 'Не удалось найти контрагента' })
+        res.status(500).json({ message: 'Не удалось получить информацию о контрагенте!' })
     }
 }
 
-
+/* Добавление контрагента
+route - POST {BASE_URL}/api/v1/partner/add
+body: name, shortName, ogrn, ogrnDate, inn, address1, address2, email, phone, bank, boss, bossGenitive
+*/
 const addPartner = async (req, res) => {
 
     try {
@@ -42,23 +48,60 @@ const addPartner = async (req, res) => {
 
         if (!data.name || !data.inn || !data.ogrn) {
 
-            return res.status(400).json({ message: 'Что-то не указано' })
+            return res.status(400).json({ message: 'Что-то  важное не указано' })
 
         }
 
         const partner = await prisma.partner.create({
-            data: {
-                name: data.name,
-                inn: data.inn,
-                ogrn: data.ogrn
+            data
+        })
+
+        res.status(201).json(partner)
+    } catch {
+        res.status(500).json({ message: 'Не удалось добавить нового контрагента!' })
+    }
+}
+
+/* Редактирование контрагента
+route - PUT {BASE_URL}/api/v1/partner/edit
+body: id, name, shortName, ogrn, ogrnDate, inn, address1, address2, email, phone, bank, boss, bossGenitive
+*/
+const editPartner = async (req, res) => {
+
+    try {
+        const data = req.body
+
+        await prisma.partner.update({
+            where: {
+                id: data.id
+            },
+            data
+        })
+
+        res.status(200).json(data)
+    } catch {
+        res.status(500).json({ message: 'Не удалось отредактировать информацию о контрагенте!' })
+    }
+}
+
+/* Удаление контрагента
+route - DELETE {BASE_URL}/api/v1/partner/delete
+body: id
+*/
+const deletePartner = async (req, res) => {
+
+    try {
+        const { id } = req.body
+
+        await prisma.partner.delete({
+            where: {
+                id
             }
         })
 
-        res.status(201).json({
-            message: 'Контрагент добавлен!'
-        })
+        res.status(200).json({ message: 'Контрагент удален!' })
     } catch {
-        res.status(500).json({ message: 'Не удалось добавить нового контрагента' })
+        res.status(500).json({ message: 'Не удалось удалить контрагента!' })
     }
 }
 
@@ -67,6 +110,6 @@ module.exports = {
     getAllPartners,
     getPartnerById,
     addPartner,
-    //editPartner,
-    //deletePartner
+    editPartner,
+    deletePartner
 }
