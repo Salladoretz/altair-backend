@@ -6,7 +6,18 @@ route - GET {BASE_URL}/api/v1/contract
 const getAllContracts = async (req, res) => {
 
     try {
-        const contracts = await prisma.contract.findMany()
+        const contracts = await prisma.contract.findMany({
+            select: {
+                id: true,
+                contractNumber: true,
+                contractDate: true,
+                place: true,
+                original: true,
+                cloudCopy: true,
+                partner: true,
+                createdAddendum: true
+            }
+        })
 
         res.status(200).json(contracts)
 
