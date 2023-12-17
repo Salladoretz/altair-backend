@@ -39,7 +39,7 @@ const getContractById = async (req, res) => {
 
 /* Добавление договора
 route - POST {BASE_URL}/api/v1/contract/add
-body: contractNumber, partnerId
+body: contractNumber, contractDate, placeId, original, cloudCopy, partnerId
 через модель Partner
 */
 const addContract = async (req, res) => {
@@ -60,7 +60,11 @@ const addContract = async (req, res) => {
             data: {
                 createdContract: {
                     create: {
-                        contractNumber: data.contractNumber
+                        contractNumber: data.contractNumber,
+                        contractDate: data.contractDate,
+                        placeId: Number(data.placeId),
+                        original: Boolean(data.original),
+                        cloudCopy: data.cloudCopy
                     }
                 }
             }

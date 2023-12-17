@@ -39,10 +39,12 @@ model Contract {
   id              String  @id @default(uuid())
   contractNumber  String?
   contractDate    DateTime?
-  partner         Partner @relation(fields: [partnerId], references: [id])
-  partnerId       String
+  place           ConstractionPlace @relation(fields: [placeId], references: [id]) 
+  placeId         Int @default(1)
   original        Boolean?
   cloudCopy       String?
+  partner         Partner @relation(fields: [partnerId], references: [id])
+  partnerId       String
   createdAddendum Addendum[]
 }
 
@@ -54,4 +56,12 @@ model Addendum {
   cloudCopy       String?
   contract        Contract @relation(fields: [contractId], references: [id])
   contractId      String
+}
+
+model ConstractionPlace {
+  id              Int     @id @default(autoincrement())
+  name            String
+  fullAddress     String?
+  status          Boolean @default(true)
+  createdContract Contract[]
 }

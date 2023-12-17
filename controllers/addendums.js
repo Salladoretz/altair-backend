@@ -23,7 +23,10 @@ const addAddendum = async (req, res) => {
             data: {
                 createdAddendum: {
                     create: {
-                        data
+                        addendumNumber: data.addendumNumber,
+                        addendumDate: data.addendumDate,
+                        original: Boolean(data.original),
+                        cloudCopy: data.cloudCopy
                     }
                 }
             }
@@ -48,7 +51,12 @@ const editAddendum = async (req, res) => {
             where: {
                 id: data.id
             },
-            data
+            data: {
+                addendumNumber: data.addendumNumber,
+                addendumDate: data.addendumDate,
+                original: Boolean(data.original),
+                cloudCopy: data.cloudCopy
+            }
         })
 
         res.status(200).json({ message: 'Дополнительное соглашение изменено!' })
