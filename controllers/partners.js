@@ -7,20 +7,50 @@ const getAllPartners = async (req, res) => {
 
     try {
         const partners = await prisma.partner.findMany({
-            select: {
-                name: true,
-                shortName: true,
+            include: {
                 createdContract: {
-                    select: {
-                        id: true,
-                        contractNumber: true,
-                        contractDate: true,
-                        original: true,
-                        cloudCopy: true,
-                        createdAddendum: true
+                    include: {
+                        place: {
+                            select: {
+                                name: true
+                            }
+                        },
+                        contractType: {
+                            select: {
+                                title: true
+                            }
+                        },
+                        createdAddendum: {
+                            include: {
+                                place: {
+                                    select: {
+                                        name: true
+                                    }
+                                },
+                                createdOtherAddendumDocs: {
+                                    include: {
+                                        otherDocType: {
+                                            select: {
+                                                title: true
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        createdOtherContractDocs: {
+                            include: {
+                                otherDocType: {
+                                    select: {
+                                        title: true
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
+
         })
 
         res.status(200).json(partners)

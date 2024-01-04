@@ -36,7 +36,7 @@ const login = async (req, res) => {
 
 }
 
-const register = async (req, res) => {
+const registration = async (req, res) => {
 
     try {
         const { nickname, password } = req.body
@@ -52,7 +52,7 @@ const register = async (req, res) => {
         })
 
         if (registeredUser) {
-            return res.status(400).json({ message: 'Такой пользователь существует' })
+            return res.status(400).json({ message: 'Такой пользователь уже существует' })
         }
 
         const salt = await bcrypt.genSalt(8)
@@ -89,6 +89,6 @@ const current = async (req, res) => {
 
 module.exports = {
     login,
-    register,
+    registration,
     current
 }
