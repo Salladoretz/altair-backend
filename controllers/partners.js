@@ -20,11 +20,28 @@ const getAllPartners = async (req, res) => {
                                 title: true
                             }
                         },
+                        partner: {
+                            select: {
+                                shortName: true
+                            }
+                        },
                         createdAddendum: {
                             include: {
                                 place: {
                                     select: {
                                         name: true
+                                    }
+                                },
+                                contract: {
+                                    select: {
+                                        contractNumber: true,
+                                        contractDate: true,
+                                        partner: {
+                                            select: {
+                                                shortName: true
+                                            }
+                                        }
+
                                     }
                                 },
                                 createdOtherAddendumDocs: {
@@ -84,17 +101,21 @@ const getPartnerById = async (req, res) => {
 
 /* Добавление контрагента
 route - POST {BASE_URL}/api/v1/partner/add
-body: name, shortName, ogrn, ogrnDate, inn, address1, address2, email, phone, bank, boss, bossGenitive
+body: name, shortName, ogrn, ogrnDate, inn, address1, address2, email, phone, bank, boss
 */
 const addPartner = async (req, res) => {
 
     try {
         const data = req.body
 
-        if (!data.name || !data.inn || !data.ogrn) {
+        if (!data.shortName || !data.inn) {
 
             return res.status(400).json({ message: 'Что-то  важное не указано' })
 
+        }
+
+        if (data.ogrnDate) {
+            data.ogrnDate = new Date(data.ogrnDate).toISOString()
         }
 
         const partner = await prisma.partner.create({

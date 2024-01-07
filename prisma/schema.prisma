@@ -36,7 +36,6 @@ model Partner {
   bank            String?
   bossTitle       String?
   boss            String?
-  bossGenitive    String?
   comments        String?
   status          Boolean @default(true)
   createdAt       DateTime    @default(now())
@@ -56,6 +55,8 @@ model Contract {
   contractDate    DateTime?
   contractType    ContractTypes @relation(fields: [contractTypeId], references: [id])
   contractTypeId  Int @default(1)
+  contractAmount  Int?
+  contractPeriod  DateTime?
   place           ConstractionPlace @relation(fields: [placeId], references: [id]) 
   placeId         Int @default(1)
   original        Boolean?
