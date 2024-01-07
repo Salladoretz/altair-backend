@@ -1,8 +1,7 @@
 const express = require('express')
 const router = express.Router()
-const { check } = require('../controllers/check.js')
 
 
-router.get('/check', check)
+router.get('/check', function (req, res) { res.send('Still alive!') })
 
 module.exports = router
