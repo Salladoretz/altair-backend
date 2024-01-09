@@ -26,7 +26,7 @@ model Partner {
   name            String
   shortName       String?    @unique
   ogrn            String?    @unique
-  ogrnDate        DateTime?
+  ogrnDate        String?
   inn             String     @unique
   kpp             String?
   address1        String?

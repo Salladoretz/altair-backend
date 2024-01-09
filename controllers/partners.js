@@ -6,69 +6,72 @@ route - GET {BASE_URL}/api/v1/partner
 const getAllPartners = async (req, res) => {
 
     try {
-        const partners = await prisma.partner.findMany({
-            include: {
-                createdContract: {
-                    include: {
-                        place: {
-                            select: {
-                                name: true
-                            }
-                        },
-                        contractType: {
-                            select: {
-                                title: true
-                            }
-                        },
-                        partner: {
-                            select: {
-                                shortName: true
-                            }
-                        },
-                        createdAddendum: {
-                            include: {
-                                place: {
-                                    select: {
-                                        name: true
-                                    }
-                                },
-                                contract: {
-                                    select: {
-                                        contractNumber: true,
-                                        contractDate: true,
-                                        partner: {
-                                            select: {
-                                                shortName: true
-                                            }
+        const partners = await prisma.partner.findMany(
+            {
+                include: {
+                    createdContract: {
+                        include: {
+                            place: {
+                                select: {
+                                    name: true
+                                }
+                            },
+                            contractType: {
+                                select: {
+                                    title: true
+                                }
+                            },
+                            partner: {
+                                select: {
+                                    shortName: true
+                                }
+                            },
+                            createdAddendum: {
+                                include: {
+                                    place: {
+                                        select: {
+                                            name: true
                                         }
+                                    },
+                                    contract: {
+                                        select: {
+                                            contractNumber: true,
+                                            contractDate: true,
+                                            partner: {
+                                                select: {
+                                                    shortName: true
+                                                }
+                                            }
 
-                                    }
-                                },
-                                createdOtherAddendumDocs: {
-                                    include: {
-                                        otherDocType: {
-                                            select: {
-                                                title: true
+                                        }
+                                    },
+                                    createdOtherAddendumDocs: {
+                                        include: {
+                                            otherDocType: {
+                                                select: {
+                                                    title: true
+                                                }
                                             }
                                         }
                                     }
                                 }
-                            }
-                        },
-                        createdOtherContractDocs: {
-                            include: {
-                                otherDocType: {
-                                    select: {
-                                        title: true
+                            },
+                            createdOtherContractDocs: {
+                                include: {
+                                    otherDocType: {
+                                        select: {
+                                            title: true
+                                        }
                                     }
                                 }
                             }
                         }
                     }
                 }
+
             }
 
-        })
+        )
 
         res.status(200).json(partners)
 
@@ -136,6 +139,10 @@ const editPartner = async (req, res) => {
 
     try {
         const data = req.body
+
+        if (data.ogrnDate) {
+            data.ogrnDate = new Date(data.ogrnDate).toISOString()
+        }
 
         await prisma.partner.update({
             where: {
