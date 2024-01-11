@@ -8,16 +8,16 @@ datasource db {
 }
 
 model User {
-  id       String  @id @default(uuid())
+  id       String      @id @default(uuid())
   nickname String
   password String
   name     String?
-  role      UserRoles[]
+  role     UserRoles[]
 }
 
 model UserRoles {
-  id  Int     @id @default(autoincrement())
-  title String
+  id          Int    @id @default(autoincrement())
+  title       String
   createdUser User[]
 }
 
@@ -37,94 +37,94 @@ model Partner {
   bossTitle       String?
   boss            String?
   comments        String?
-  status          Boolean @default(true)
-  createdAt       DateTime    @default(now())
-  onDelete        Boolean     @default(false)
+  status          Boolean    @default(true)
+  createdAt       DateTime   @default(now())
+  onDelete        Boolean    @default(false)
   createdContract Contract[]
 }
 
 model ContractTypes {
-  id  Int     @id @default(autoincrement())
-  title String
+  id              Int        @id @default(autoincrement())
+  title           String
   createdContract Contract[]
 }
 
 model Contract {
-  id              String  @id @default(uuid())
-  contractNumber  String?
-  contractDate    DateTime?
-  contractType    ContractTypes @relation(fields: [contractTypeId], references: [id])
-  contractTypeId  Int @default(1)
-  contractAmount  Int?
-  contractPeriod  DateTime?
-  place           ConstractionPlace @relation(fields: [placeId], references: [id]) 
-  placeId         Int @default(1)
-  original        Boolean?
-  cloudCopy       String?
-  partner         Partner @relation(fields: [partnerId], references: [id])
-  partnerId       String
-  createdAddendum Addendum[]
-  createdOtherContractDocs       OtherContractDocs[]
-  comments        String?
-  status          Boolean @default(true)
-  createdAt       DateTime    @default(now())
-  onDelete        Boolean     @default(false)
+  id                       String              @id @default(uuid())
+  contractNumber           String?
+  contractDate             DateTime?
+  contractType             ContractTypes       @relation(fields: [contractTypeId], references: [id])
+  contractTypeId           Int                 @default(1)
+  contractAmount           Int?
+  contractPeriod           DateTime?
+  place                    ConstractionPlace   @relation(fields: [placeId], references: [id])
+  placeId                  Int                 @default(1)
+  original                 Boolean?
+  cloudCopy                String?
+  partner                  Partner             @relation(fields: [partnerId], references: [id])
+  partnerId                String
+  createdAddendum          Addendum[]
+  createdOtherContractDocs OtherContractDocs[]
+  comments                 String?
+  status                   Boolean             @default(true)
+  createdAt                DateTime            @default(now())
+  onDelete                 Boolean             @default(false)
 }
 
 model Addendum {
-  id              String  @id @default(uuid())
-  addendumNumber  String?
-  addendumDate    DateTime?
-  place           ConstractionPlace @relation(fields: [placeId], references: [id]) 
-  placeId         Int @default(1)
-  original        Boolean?
-  cloudCopy       String?
-  contract        Contract @relation(fields: [contractId], references: [id])
-  contractId      String
-  comments        String?
-  createdAt       DateTime    @default(now())
-  onDelete        Boolean     @default(false)
+  id                       String              @id @default(uuid())
+  addendumNumber           String?
+  addendumDate             DateTime?
+  place                    ConstractionPlace   @relation(fields: [placeId], references: [id])
+  placeId                  Int                 @default(1)
+  original                 Boolean?
+  cloudCopy                String?
+  contract                 Contract            @relation(fields: [contractId], references: [id])
+  contractId               String
+  comments                 String?
+  createdAt                DateTime            @default(now())
+  onDelete                 Boolean             @default(false)
   createdOtherAddendumDocs OtherAddendumDocs[]
 }
 
 model OtherDocTypes {
-  id  Int     @id @default(autoincrement())
-  title String
+  id                       Int                 @id @default(autoincrement())
+  title                    String
   createdOtherContractDocs OtherContractDocs[]
   createdOtherAddendumDocs OtherAddendumDocs[]
 }
 
 model OtherContractDocs {
-  id              String  @id @default(uuid())
-  otherDocType    OtherDocTypes @relation(fields: [otherDocTypeId], references: [id])
-  otherDocTypeId  Int @default(1)
-  description     String?
-  contract        Contract @relation(fields: [contractId], references: [id])
-  contractId      String
-  original        Boolean?
-  cloudCopy       String?
-  createdAt       DateTime    @default(now())
-  onDelete        Boolean     @default(false)
+  id             String        @id @default(uuid())
+  otherDocType   OtherDocTypes @relation(fields: [otherDocTypeId], references: [id])
+  otherDocTypeId Int           @default(1)
+  description    String?
+  contract       Contract      @relation(fields: [contractId], references: [id])
+  contractId     String
+  original       Boolean?
+  cloudCopy      String?
+  createdAt      DateTime      @default(now())
+  onDelete       Boolean       @default(false)
 }
 
 model OtherAddendumDocs {
-  id              String  @id @default(uuid())
-  otherDocType    OtherDocTypes @relation(fields: [otherDocTypeId], references: [id])
-  otherDocTypeId  Int @default(1)
-  description     String?
-  addendum        Addendum @relation(fields: [addendumId], references: [id])
-  addendumId      String
-  original        Boolean?
-  cloudCopy       String?
-  createdAt       DateTime    @default(now())
-  onDelete        Boolean     @default(false)
+  id             String        @id @default(uuid())
+  otherDocType   OtherDocTypes @relation(fields: [otherDocTypeId], references: [id])
+  otherDocTypeId Int           @default(1)
+  description    String?
+  addendum       Addendum      @relation(fields: [addendumId], references: [id])
+  addendumId     String
+  original       Boolean?
+  cloudCopy      String?
+  createdAt      DateTime      @default(now())
+  onDelete       Boolean       @default(false)
 }
 
 model ConstractionPlace {
-  id              Int     @id @default(autoincrement())
+  id              Int        @id @default(autoincrement())
   name            String
   fullAddress     String?
-  status          Boolean @default(true)
+  status          Boolean    @default(true)
   createdContract Contract[]
   createdAddendum Addendum[]
 }
