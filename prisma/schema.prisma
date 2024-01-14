@@ -55,8 +55,10 @@ model Contract {
   contractDate             DateTime?
   contractType             ContractTypes       @relation(fields: [contractTypeId], references: [id])
   contractTypeId           Int                 @default(1)
+  contractSubject           String?
   contractAmount           Int?
   contractPeriod           DateTime?
+  contractMaterials         Boolean?
   place                    ConstractionPlace   @relation(fields: [placeId], references: [id])
   placeId                  Int                 @default(1)
   original                 Boolean?
@@ -75,6 +77,9 @@ model Addendum {
   id                       String              @id @default(uuid())
   addendumNumber           String?
   addendumDate             DateTime?
+  addendumSubject           String?
+  addendumAmount           Int?
+  increaseTotalAmmount  Boolean?
   place                    ConstractionPlace   @relation(fields: [placeId], references: [id])
   placeId                  Int                 @default(1)
   original                 Boolean?

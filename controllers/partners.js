@@ -172,7 +172,7 @@ const deletePartner = async (req, res) => {
             }
         })
 
-        res.status(200).json({ message: 'Контрагент удален!' })
+        res.status(200).json(id)
     } catch {
         res.status(500).json({ message: 'Не удалось удалить контрагента!' })
     }

@@ -50,8 +50,6 @@ const getContractById = async (req, res) => {
 
 /* Добавление договора
 route - POST {BASE_URL}/api/v1/contract/add
-body: contractNumber, contractDate, placeId, original, cloudCopy, partnerId
-через модель Partner
 */
 const addContract = async (req, res) => {
 
@@ -64,21 +62,18 @@ const addContract = async (req, res) => {
 
         }
 
-        const contract = await prisma.partner.update({
-            where: {
-                id: data.partnerId
-            },
-            data: {
-                createdContract: {
-                    create: {
-                        contractNumber: data.contractNumber,
-                        contractDate: data.contractDate,
-                        placeId: Number(data.placeId),
-                        original: Boolean(data.original),
-                        cloudCopy: data.cloudCopy
-                    }
-                }
-            }
+        data.contractTypeId ? data.contractTypeId = Number(data.contractTypeId) : ''
+        data.contractDate ? data.contractDate = new Date(data.contractDate).toISOString() : ''
+        data.contractAmount ? data.contractAmount = Number(data.contractAmount) : ''
+        data.contractPeriod ? data.contractPeriod = new Date(data.contractPeriod).toISOString() : ''
+        data.contractMaterials ? data.contractMaterials = Boolean(data.contractMaterials) : ''
+        data.placeId ? data.placeId = Number(data.placeId) : ''
+        data.original ? data.original = Boolean(data.original) : ''
+        data.status ? data.status = Boolean(data.status) : ''
+
+
+        const contract = await prisma.contract.create({
+            data
         })
 
         res.status(201).json(contract)
