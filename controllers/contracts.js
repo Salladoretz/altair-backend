@@ -111,15 +111,15 @@ body: id
 const deleteContract = async (req, res) => {
 
     try {
-        const { id } = req.body
+        const data = req.body
 
         await prisma.contract.delete({
             where: {
-                id
+                id: data.id
             }
         })
 
-        res.status(200).json({ message: 'Договор удален!' })
+        res.status(200).json(data)
     } catch {
         res.status(500).json({ message: 'Не удалось удалить договор!' })
     }
