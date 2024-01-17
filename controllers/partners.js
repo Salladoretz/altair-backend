@@ -111,7 +111,7 @@ const addPartner = async (req, res) => {
     try {
         const data = req.body
 
-        if (!data.shortName || !data.inn) {
+        if (!data.name || !data.inn) {
 
             return res.status(400).json({ message: 'Что-то  важное не указано' })
 
@@ -124,6 +124,8 @@ const addPartner = async (req, res) => {
         const partner = await prisma.partner.create({
             data
         })
+
+        partner.createdContract = []
 
         res.status(201).json(partner)
     } catch {
