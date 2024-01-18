@@ -98,7 +98,7 @@ const editContract = async (req, res) => {
             data
         })
 
-        res.status(200).json({ message: 'Информация о договоре изменена!' })
+        res.status(200).json(data)
     } catch {
         res.status(500).json({ message: 'Не удалось отредактировать информацию о договоре!' })
     }
