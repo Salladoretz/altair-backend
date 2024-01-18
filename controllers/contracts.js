@@ -91,6 +91,15 @@ const editContract = async (req, res) => {
     try {
         const data = req.body
 
+        data.contractTypeId ? data.contractTypeId = Number(data.contractTypeId) : ''
+        data.contractDate ? data.contractDate = new Date(data.contractDate).toISOString() : ''
+        data.contractAmount ? data.contractAmount = Number(data.contractAmount) : ''
+        data.contractPeriod ? data.contractPeriod = new Date(data.contractPeriod).toISOString() : ''
+        data.contractMaterials ? data.contractMaterials = Boolean(data.contractMaterials) : ''
+        data.placeId ? data.placeId = Number(data.placeId) : ''
+        data.original ? data.original = Boolean(data.original) : ''
+        data.status ? data.status = Boolean(data.status) : ''
+
         await prisma.contract.update({
             where: {
                 id: data.id
@@ -98,7 +107,13 @@ const editContract = async (req, res) => {
             data
         })
 
-        res.status(200).json(data)
+        const contract = await prisma.contract.findUnique({
+            where: {
+                id: data.id
+            }
+        })
+
+        res.status(200).json(contract)
     } catch {
         res.status(500).json({ message: 'Не удалось отредактировать информацию о договоре!' })
     }
