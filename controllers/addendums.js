@@ -16,6 +16,10 @@ const addAddendum = async (req, res) => {
 
         }
 
+        const partnerId = data.partnerId
+
+        delete data.partnerId
+
         data.addendumDate ? data.addendumDate = new Date(data.addendumDate).toISOString() : ''
         data.addendumAmount ? data.addendumAmount = Number(data.addendumAmount) : ''
         data.increaseTotalAmmount ? data.increaseTotalAmmount = Boolean(data.increaseTotalAmmount) : ''
@@ -25,7 +29,7 @@ const addAddendum = async (req, res) => {
 
         const addendum = await prisma.addendum.create({ data })
 
-        addendum.partnerId = data.partnerId
+        addendum.partnerId = partnerId
 
         res.status(201).json(addendum)
     } catch {
