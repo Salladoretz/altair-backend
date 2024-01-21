@@ -72,9 +72,7 @@ const addContract = async (req, res) => {
         data.status ? data.status = Boolean(data.status) : ''
 
 
-        const contract = await prisma.contract.create({
-            data
-        })
+        const contract = await prisma.contract.create({ data })
 
         res.status(201).json(contract)
     } catch {
