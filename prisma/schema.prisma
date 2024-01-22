@@ -55,10 +55,10 @@ model Contract {
   contractDate             DateTime?
   contractType             ContractTypes       @relation(fields: [contractTypeId], references: [id])
   contractTypeId           Int                 @default(1)
-  contractSubject           String?
+  contractSubject          String?
   contractAmount           Int?
   contractPeriod           DateTime?
-  contractMaterials         Boolean?
+  contractMaterials        Boolean?
   place                    ConstractionPlace   @relation(fields: [placeId], references: [id])
   placeId                  Int                 @default(1)
   original                 Boolean?
@@ -77,9 +77,9 @@ model Addendum {
   id                       String              @id @default(uuid())
   addendumNumber           String?
   addendumDate             DateTime?
-  addendumSubject           String?
+  addendumSubject          String?
   addendumAmount           Int?
-  increaseTotalAmmount  Boolean?
+  increaseTotalAmmount     Boolean?
   place                    ConstractionPlace   @relation(fields: [placeId], references: [id])
   placeId                  Int                 @default(1)
   original                 Boolean?
@@ -100,36 +100,42 @@ model OtherDocTypes {
 }
 
 model OtherContractDocs {
-  id             String        @id @default(uuid())
-  otherDocType   OtherDocTypes @relation(fields: [otherDocTypeId], references: [id])
-  otherDocTypeId Int           @default(1)
+  id             String            @id @default(uuid())
+  otherDocType   OtherDocTypes     @relation(fields: [otherDocTypeId], references: [id])
+  otherDocTypeId Int               @default(1)
   description    String?
-  contract       Contract      @relation(fields: [contractId], references: [id])
+  contract       Contract          @relation(fields: [contractId], references: [id])
   contractId     String
+  place          ConstractionPlace @relation(fields: [placeId], references: [id])
+  placeId        Int               @default(1)
   original       Boolean?
   cloudCopy      String?
-  createdAt      DateTime      @default(now())
-  onDelete       Boolean       @default(false)
+  createdAt      DateTime          @default(now())
+  onDelete       Boolean           @default(false)
 }
 
 model OtherAddendumDocs {
-  id             String        @id @default(uuid())
-  otherDocType   OtherDocTypes @relation(fields: [otherDocTypeId], references: [id])
-  otherDocTypeId Int           @default(1)
+  id             String            @id @default(uuid())
+  otherDocType   OtherDocTypes     @relation(fields: [otherDocTypeId], references: [id])
+  otherDocTypeId Int               @default(1)
   description    String?
-  addendum       Addendum      @relation(fields: [addendumId], references: [id])
+  addendum       Addendum          @relation(fields: [addendumId], references: [id])
   addendumId     String
+  place          ConstractionPlace @relation(fields: [placeId], references: [id])
+  placeId        Int               @default(1)
   original       Boolean?
   cloudCopy      String?
-  createdAt      DateTime      @default(now())
-  onDelete       Boolean       @default(false)
+  createdAt      DateTime          @default(now())
+  onDelete       Boolean           @default(false)
 }
 
 model ConstractionPlace {
-  id              Int        @id @default(autoincrement())
-  name            String
-  fullAddress     String?
-  status          Boolean    @default(true)
-  createdContract Contract[]
-  createdAddendum Addendum[]
+  id                       Int                 @id @default(autoincrement())
+  name                     String
+  fullAddress              String?
+  status                   Boolean             @default(true)
+  createdContract          Contract[]
+  createdAddendum          Addendum[]
+  createdOtherContractDocs OtherContractDocs[]
+  createdOtherAddendumDocs OtherAddendumDocs[]
 }

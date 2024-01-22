@@ -25,7 +25,7 @@ const addAddendum = async (req, res) => {
         data.increaseTotalAmmount ? data.increaseTotalAmmount = Boolean(data.increaseTotalAmmount) : ''
         data.placeId ? data.placeId = Number(data.placeId) : ''
         data.original ? data.original = Boolean(data.original) : ''
-        data.status ? data.status = Boolean(data.status) : ''
+
 
         const addendum = await prisma.addendum.create({ data })
 
@@ -46,12 +46,23 @@ const editAddendum = async (req, res) => {
     try {
         const data = req.body
 
+        if (!data.contractId) {
+
+            return res.status(400).json({ message: 'Договор не указан!' })
+
+        }
+
+        const partnerId = data.partnerId
+
+        delete data.partnerId
+
         data.addendumDate ? data.addendumDate = new Date(data.addendumDate).toISOString() : ''
         data.addendumAmount ? data.addendumAmount = Number(data.addendumAmount) : ''
         data.increaseTotalAmmount ? data.increaseTotalAmmount = Boolean(data.increaseTotalAmmount) : ''
         data.placeId ? data.placeId = Number(data.placeId) : ''
         data.original ? data.original = Boolean(data.original) : ''
-        data.status ? data.status = Boolean(data.status) : ''
+
+
 
         await prisma.addendum.update({
             where: {
@@ -66,7 +77,7 @@ const editAddendum = async (req, res) => {
             }
         })
 
-        addendum.partnerId = data.partnerId
+        addendum.partnerId = partnerId
 
         res.status(200).json(addendum)
     } catch {
