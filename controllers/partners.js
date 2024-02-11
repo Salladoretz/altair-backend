@@ -56,15 +56,7 @@ const getAllPartners = async (req, res) => {
                                     }
                                 }
                             },
-                            createdOtherContractDocs: {
-                                include: {
-                                    otherDocType: {
-                                        select: {
-                                            title: true
-                                        }
-                                    }
-                                }
-                            }
+                            createdOtherContractDocs: {}
                         }
                     }
                 }

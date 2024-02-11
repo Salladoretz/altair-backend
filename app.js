@@ -19,6 +19,7 @@ app.use('/api/v1/base-info', require('./routes/base-info'))
 app.use('/api/v1/partner', require('./routes/partners'))
 app.use('/api/v1/contract', require('./routes/contracts'))
 app.use('/api/v1/addendum', require('./routes/addendums'))
+app.use('/api/v1/othercontractdoc', require('./routes/other-contract-docs'))
 app.use('/api/v1/constractionplace', require('./routes/constractionPlace'))
 
 module.exports = app

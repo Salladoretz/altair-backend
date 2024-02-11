@@ -16,7 +16,7 @@ const addOtherContractDocs = async (req, res) => {
 
         delete data.partnerId
 
-        data.otherContractDocsDate ? data.otherContractDocsDate = new Date(data.otherContractDocs).toISOString() : ''
+        data.otherDocTypeId ? data.otherDocTypeId = Number(data.otherDocTypeId) : ''
         data.placeId ? data.placeId = Number(data.placeId) : ''
         data.original ? data.original = Boolean(data.original) : ''
 
@@ -25,7 +25,7 @@ const addOtherContractDocs = async (req, res) => {
 
         otherContractDocs.partnerId = partnerId
 
-        res.status(201).json(addendum)
+        res.status(201).json(otherContractDocs)
     } catch {
         res.status(500).json({ message: 'Не удалось добавить иной документ' })
     }
@@ -47,7 +47,7 @@ const editOtherContractDocs = async (req, res) => {
 
         delete data.partnerId
 
-        data.otherContractDocsDate ? data.otherContractDocsDate = new Date(data.otherContractDocsDate).toISOString() : ''
+        data.otherDocTypeId ? data.otherDocTypeId = Number(data.otherDocTypeId) : ''
         data.placeId ? data.placeId = Number(data.placeId) : ''
         data.original ? data.original = Boolean(data.original) : ''
 
