@@ -89,14 +89,12 @@ model Addendum {
   comments                 String?
   createdAt                DateTime            @default(now())
   onDelete                 Boolean             @default(false)
-  createdOtherAddendumDocs OtherAddendumDocs[]
 }
 
 model OtherDocTypes {
   id                       Int                 @id @default(autoincrement())
   title                    String
   createdOtherContractDocs OtherContractDocs[]
-  createdOtherAddendumDocs OtherAddendumDocs[]
 }
 
 model OtherContractDocs {
@@ -114,20 +112,6 @@ model OtherContractDocs {
   onDelete       Boolean           @default(false)
 }
 
-model OtherAddendumDocs {
-  id             String            @id @default(uuid())
-  otherDocType   OtherDocTypes     @relation(fields: [otherDocTypeId], references: [id])
-  otherDocTypeId Int               @default(1)
-  description    String?
-  addendum       Addendum          @relation(fields: [addendumId], references: [id])
-  addendumId     String
-  place          ConstractionPlace @relation(fields: [placeId], references: [id])
-  placeId        Int               @default(1)
-  original       Boolean?
-  cloudCopy      String?
-  createdAt      DateTime          @default(now())
-  onDelete       Boolean           @default(false)
-}
 
 model ConstractionPlace {
   id                       Int                 @id @default(autoincrement())
@@ -137,5 +121,4 @@ model ConstractionPlace {
   createdContract          Contract[]
   createdAddendum          Addendum[]
   createdOtherContractDocs OtherContractDocs[]
-  createdOtherAddendumDocs OtherAddendumDocs[]
 }
